@@ -19,5 +19,20 @@ def reconstruct_trip(tickets, length):
     """
     YOUR CODE HERE
     """
+    #insert each ticket source and destination into hastable
+    for ticket in tickets:
+        hash_table_insert(hashtable, ticket.source, ticket.destination)
 
-    pass
+    #plan the route
+
+    # starting destinations source will always equal none
+    route[0] = hash_table_retrieve(hashtable, 'NONE')
+    
+    # loop and set next destination on the list.
+    for i in range(1, length):
+        route[i] = hash_table_retrieve(hashtable, route[i - 1])
+    
+    return route[:-1]
+  
+
+    

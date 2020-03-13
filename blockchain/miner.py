@@ -25,7 +25,13 @@ def proof_of_work(last_proof):
     print("Searching for next proof")
     proof = 0
     #  TODO: Your code here
-
+    #encode the proof
+    encoded_proof = f'{last_proof}'.encode()
+    #hash proof
+    proof_hash = hashlib.sha256(encoded_proof).hexdigest()
+     #contiune checking for valid poof when false
+    while valid_proof(proof_hash, proof) is False:
+         proof += 100
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
 
@@ -40,8 +46,15 @@ def valid_proof(last_hash, proof):
     """
 
     # TODO: Your code here!
-    pass
+    #check first six character match last proof
+    hashed_poof = last_hash[-6:]
+    guess = f'{proof}'.encode ()
 
+    guess_hash = hashlib.sha256(guess).hexdigest()
+    if guess_hash[:6] == hashed_poof:
+        print(guess_hash)
+        return True
+    return False
 
 if __name__ == '__main__':
     # What node are we interacting with?
